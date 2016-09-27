@@ -1,0 +1,87 @@
+---
+# tasks file for krupen-task1
+
+# MYSQL
+
+- name: install mysql
+  yum:
+    name="{{ item }}"
+    state=present
+  with_items:
+    - mysql
+    - mysql-server
+    - MySQL-python
+
+
+- name: my.cfn for Mysql
+  template:
+    src: my.cnf
+    dest: /etc/my.cnf
+
+- name: initial mysql
+  shell:  /usr/bin/mysql_install_db --user=mysql
+
+- name: mysql start
+  service: name=mysqld state=started enabled=yes
+
+- name: create zabbix DB
+  mysql_db: name=zabbix encoding=utf8 collation=utf8_bin state=present
+
+- name: create zabbix user and grand privileges
+  mysql_user: name=zabbix password=zabbix priv=*.*:ALL host=localhost state=present
+
+# ZABBIX
+
+- name: install zabbix repo
+  yum: name=http://repo.zabbix.com/zabbix/2.2/rhel/6/x86_64/zabbix-release-2.2-1.el6.noarch.rpm state=present
+
+- name: install zabbix
+  yum:
+    name="{{ item }}"
+    state=present
+  with_items:
+    - zabbix
+    - zabbix-server
+    - zabbix-server-mysql
+    - zabbix-agent
+    - zabbix-sender
+
+- name: zabbix_server config
+  template: 
+      src=zabbix_server.conf 
+      dest=/etc/zabbix/zabbix_server.conf
+
+- name: zabbix gui
+  template:
+    src=zabbix.conf
+    dest=/etc/httpd/conf.d/zabbix.conf
+
+- name: documents root for zabbix
+  template:
+    src=httpd.conf
+    dest=/etc/httpd/conf/httpd.conf
+
+- name: MySQL schema.sql
+  shell: "mysql -uroot zabbix < /usr/share/doc/zabbix-server-mysql-2.2.14/create/schema.sql"
+  ignore_errors: yes
+
+- name: MySQL images.sql
+  shell: "mysql -uroot zabbix < /usr/share/doc/zabbix-server-mysql-2.2.14/create/images.sql"
+  ignore_errors: yes
+
+- name: MySQL data.sql
+  shell: "mysql -uroot zabbix < /usr/share/doc/zabbix-server-mysql-2.2.14/create/data.sql"
+  ignore_errors: yes
+
+
+- name: start services
+  service:
+    name="{{ item }}"
+    state=started
+  with_items:
+    - httpd
+    - zabbix-server
+    - zabbix-agent
+
+
+
