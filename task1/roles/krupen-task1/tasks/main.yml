@@ -46,6 +46,7 @@
     - zabbix-server-mysql
     - zabbix-agent
     - zabbix-sender
+    - zabbix-web-mysql
 
 - name: zabbix_server config
   template: 
