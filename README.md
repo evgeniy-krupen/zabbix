@@ -31,9 +31,9 @@ Student: [Evgeniy_Krupen](https://upsa.epam.com/workload/employeeView.do?employe
 
 ![](https://raw.githubusercontent.com/evgeniy-krupen/zabbix/task1/screenshots/tr2.png)
 
-- 3.8	Screenshot with process of using zabbix_sender and with server reply.  (I will fix it tomorrow)
+- 3.8	Screenshot with process of using zabbix_sender and with server reply.
 
-![](https://github.com/evgeniy-krupen/zabbix/blob/task1/screenshots/zabix-sender.png)
+![](https://github.com/evgeniy-krupen/zabbix/blob/task1/screenshots/sender.png)
 
  - 3.9.	Screenshot with process of using zabbix_get and with agent reply.
  
