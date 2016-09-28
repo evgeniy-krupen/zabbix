@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vm.define "zabbix", primary: true do |puppet|
+		puppet.vm.box = "sbeliakou/centos-6.7-x86_64"
+		puppet.vm.hostname = "zabbix"
+		puppet.vm.network "private_network", ip: "192.168.25.110"
+		puppet.vm.network "forwarded_port", guest: 80, host: 8000
+                #puppet.vm.network "forwarded_port", guest: 443, host: 9443
+		puppet.vm.provider "virtualbox" do |machine|
+			machine.name = "zabbix"
+			machine.cpus = 1
+			machine.memory = 2100
+		end
+		puppet.vm.provision "shell", inline: "echo This is Puppet exit task"
+		#puppet.vm.provision "shell", path: "puppet.sh"
+		end
+        
+    config.vm.provision "ansible" do |ansible|
+    ansible.playbook = 'provision.yml'
+    ansible.verbose = 'vv'
+    end
+
+	config.vm.define "client", primary: true do |puppet|
+		puppet.vm.box = "sbeliakou/centos-6.7-x86_64"
+		puppet.vm.hostname = "zabbix-client"
+		puppet.vm.network "private_network", ip: "192.168.25.111"
+		puppet.vm.network "forwarded_port", guest: 80, host: 9000
+                #puppet.vm.network "forwarded_port", guest: 443, host: 9443
+		puppet.vm.provider "virtualbox" do |machine|
+			machine.name = "zabbix-client"
+			machine.cpus = 1
+			machine.memory = 512
+		end
+		puppet.vm.provision "shell", inline: "echo This is Puppet exit task"
+		#puppet.vm.provision "shell", path: "puppet.sh"
+		end
+end
