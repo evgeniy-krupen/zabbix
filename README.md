@@ -1,7 +1,7 @@
 # Zabbix. Task1. Report.
 Student: [Evgeniy_Krupen](https://upsa.epam.com/workload/employeeView.do?employeeId=4060741400038655484#emplTab=general)
 
-**1. I made [Vagrantfile](https://github.com/evgeniy-krupen/zabbix/blob/task1/task1/Vagrantfile) with [Ansible provision](https://github.com/evgeniy-krupen/zabbix/blob/task1/task1/provision.yml) for task.**
+*1. I made [Vagrantfile](https://github.com/evgeniy-krupen/zabbix/blob/task1/task1/Vagrantfile) with [Ansible provision](https://github.com/evgeniy-krupen/zabbix/blob/task1/task1/provision.yml) for task.*
 
 
 ***2. I installed and tuned mysql, p, httpd, zabbix-server, zabbix-agent, zabbix-sender in manual mode. After that I started to create [the ansible role.](https://github.com/evgeniy-krupen/zabbix/blob/task1/task1/roles/krupen-task1/tasks/main.yml)***
